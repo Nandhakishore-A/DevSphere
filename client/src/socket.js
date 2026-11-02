@@ -11,8 +11,10 @@ export function getSocket() {
         socketUrl = `https://${socketUrl}`;
       }
       socketUrl = socketUrl.replace(/\/+$/, '');
+    } else if (typeof window !== 'undefined') {
+      socketUrl = window.location.origin;
     } else {
-      socketUrl = 'https://sync-forge-serverside.vercel.app';
+      socketUrl = 'http://localhost:5000';
     }
 
     socketInstance = io(socketUrl, {
@@ -24,7 +26,7 @@ export function getSocket() {
     });
 
     socketInstance.on('connect_error', (err) => {
-      console.warn('[Socket Connection Error]', err.message);
+      console.warn('[DevSphere Socket Connection Error]', err.message);
     });
   }
   return socketInstance;

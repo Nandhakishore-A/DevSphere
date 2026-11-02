@@ -4,7 +4,6 @@ import axios from 'axios';
 let rawApiUrl = (import.meta.env.VITE_API_URL || '').trim();
 
 if (rawApiUrl) {
-  // If user entered e.g. "sync-forge-serverside.vercel.app" without protocol, prepend https://
   if (
     !rawApiUrl.startsWith('http://') &&
     !rawApiUrl.startsWith('https://') &&
@@ -18,7 +17,6 @@ if (rawApiUrl) {
   }
 }
 
-// Fallback to '/api' which is automatically reverse-proxied to https://sync-forge-serverside.vercel.app by Vercel
 const resolvedBaseURL = rawApiUrl || '/api';
 
 export const api = axios.create({

@@ -1,18 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "https://sync-forge-serverside.vercel.app/api/:path*"
-    },
-    {
-      "source": "/health",
-      "destination": "https://sync-forge-serverside.vercel.app/health"
-    },
-    {
-      "source": "/socket.io/:path*",
-      "destination": "https://sync-forge-serverside.vercel.app/socket.io/:path*"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
