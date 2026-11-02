@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: devsphere
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: npm install --ignore-scripts && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLOUDINARY_CLOUD_NAME
+        value: zsfupefr
+      - key: CLOUDINARY_API_KEY
+        value: 956281599364653
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CLOUDINARY_FOLDER
+        value: mern_stack_project_storage/DevSphere
