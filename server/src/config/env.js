@@ -13,7 +13,7 @@ export const env = {
   port: Number(process.env.PORT || 5000),
   nodeEnv: process.env.NODE_ENV || 'development',
   clientOrigin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
-  mongoUri: process.env.MONGO_URI || 'mongodb+srv://nandhakishore252_db_user:gNwYWIxRKdMQRjtv@cluster0.henwuyf.mongodb.net/DevSphere?retryWrites=true&w=majority',
+  mongoUri: process.env.MONGO_URI || 'mongodb+srv://nandhakishore252_db_user:kdcF1ZIjSYuRDJWw@cluster0.nrgzdjz.mongodb.net/DevSphere?retryWrites=true&w=majority',
   jwtSecret: process.env.JWT_SECRET || 'devsphere_super_secure_jwt_secret_token_key_2026_at_least_32_chars',
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
   cloudinary: {
