@@ -29,6 +29,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    bio: {
+      type: String,
+      default: 'Full Stack Developer | Open Source Enthusiast',
+      maxlength: 300,
+    },
   },
   { timestamps: true }
 );

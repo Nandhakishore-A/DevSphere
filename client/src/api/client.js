@@ -27,7 +27,23 @@ export const api = axios.create({
   },
 });
 
-// Interceptor to format errors consistently
+// Request interceptor to attach JWT Authorization Bearer header if available
+api.interceptors.request.use(
+  (config) => {
+    try {
+      const token = localStorage.getItem('devsphere_token');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch {
+      // localStorage may fail in restricted/private contexts
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Response interceptor to format errors consistently
 api.interceptors.response.use(
   (response) => response,
   (error) => {

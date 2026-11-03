@@ -9,13 +9,18 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check current session via /api/auth/me (httpOnly cookie)
+    // Check current session via /api/auth/me (cookie and/or Authorization Bearer)
     api
       .get('/auth/me')
       .then(({ data }) => {
         setUser(data.user);
       })
       .catch(() => {
+        try {
+          localStorage.removeItem('devsphere_token');
+        } catch {
+          // ignore
+        }
         setUser(null);
       })
       .finally(() => {
@@ -25,12 +30,26 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     const { data } = await api.post('/auth/login', { email, password });
+    if (data.token) {
+      try {
+        localStorage.setItem('devsphere_token', data.token);
+      } catch {
+        // ignore
+      }
+    }
     setUser(data.user);
     return data.user;
   };
 
   const register = async (name, email, password) => {
     const { data } = await api.post('/auth/register', { name, email, password });
+    if (data.token) {
+      try {
+        localStorage.setItem('devsphere_token', data.token);
+      } catch {
+        // ignore
+      }
+    }
     setUser(data.user);
     return data.user;
   };
@@ -40,6 +59,11 @@ export function AuthProvider({ children }) {
       await api.post('/auth/logout');
     } catch {
       // Ignore network errors during logout
+    }
+    try {
+      localStorage.removeItem('devsphere_token');
+    } catch {
+      // ignore
     }
     disconnectSocket();
     setUser(null);
@@ -55,6 +79,7 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         user,
+        setUser,
         loading,
         login,
         register,

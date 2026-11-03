@@ -1,11 +1,16 @@
 import { Router } from 'express';
 import { z } from 'zod';
+import multer from 'multer';
 import { register, login, logout, me, updateProfile } from '../controllers/authController.js';
 import { requireAuth } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
 import { authLimiter } from '../middleware/rateLimit.js';
 
 const router = Router();
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+});
 
 // Validation Regex patterns
 const nameRegex = /^[a-zA-Z\s.'-]+$/;
@@ -62,6 +67,7 @@ router.post('/register', authLimiter, validate(registerSchema), register);
 router.post('/login', authLimiter, validate(loginSchema), login);
 router.post('/logout', logout);
 router.get('/me', requireAuth, me);
-router.patch('/profile', requireAuth, updateProfile);
+router.patch('/profile', requireAuth, upload.single('avatar'), updateProfile);
+router.put('/profile', requireAuth, upload.single('avatar'), updateProfile);
 
 export default router;
