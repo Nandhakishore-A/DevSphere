@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 import { env } from './env.js';
 
 let cachedConnection = null;
+let lastAttempt = 0;
+const RETRY_INTERVAL_MS = 15000;
 
 export async function connectDB() {
   if (mongoose.connection.readyState >= 1) {
@@ -12,16 +14,24 @@ export async function connectDB() {
     return cachedConnection;
   }
 
+  // Throttle retries if failed recently
+  const now = Date.now();
+  if (now - lastAttempt < RETRY_INTERVAL_MS) {
+    throw new Error('Database connection pending or temporarily unavailable. Ensure 0.0.0.0/0 is whitelisted in MongoDB Atlas Network Access.');
+  }
+
+  lastAttempt = now;
   const uri = env.mongoUri;
   try {
     cachedConnection = await mongoose.connect(uri, {
-      serverSelectionTimeoutMS: 8000,
+      serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
     });
     console.log(`[Database] MongoDB Atlas Connected: ${cachedConnection.connection.host}`);
     return cachedConnection;
   } catch (err) {
-    console.error(`[Database Error] Failed to connect to MongoDB: ${err.message}`);
+    console.error(`[Database Notice] Could not connect to Atlas: ${err.message}`);
+    console.error(`[Database Tip] If accessing from a new network or deployment, add 0.0.0.0/0 in MongoDB Atlas -> Security -> Network Access.`);
     cachedConnection = null;
     throw err;
   }

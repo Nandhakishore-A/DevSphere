@@ -62,7 +62,11 @@ export function createApp() {
   app.use(cookieParser());
 
   // Serverless Database Connection Gateway (ensures cold-start connections on Vercel)
-  app.use(async (_req, _res, next) => {
+  app.use(async (req, _res, next) => {
+    // Health and root welcome endpoints respond immediately
+    if (req.path === '/health' || req.path === '/api/health' || req.path === '/') {
+      return next();
+    }
     try {
       if (env.nodeEnv !== 'test') {
         await connectDB();
