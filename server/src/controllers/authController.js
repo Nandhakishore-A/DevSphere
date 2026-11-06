@@ -68,6 +68,38 @@ export async function login(req, res, next) {
   }
 }
 
+export async function socialLogin(req, res, next) {
+  try {
+    const { provider, email, name, avatar } = req.body;
+    if (!email || !provider) {
+      throw new ApiError(400, 'Provider and email are required for social login');
+    }
+
+    const cleanEmail = String(email).toLowerCase().trim();
+    let user = await User.findOne({ email: cleanEmail });
+
+    if (!user) {
+      // Auto-provision user account with random secure password
+      const cleanName = (name && String(name).trim()) || (provider === 'google' ? 'Google Developer' : 'GitHub Developer');
+      const randomPass = 'OAuth_' + Math.random().toString(36).slice(-8) + '!Aa1';
+      user = new User({
+        name: cleanName.length >= 2 ? cleanName.slice(0, 50) : 'Developer',
+        email: cleanEmail,
+        avatar: avatar || (provider === 'github'
+          ? 'https://avatars.githubusercontent.com/u/9919?s=200&v=4'
+          : 'https://lh3.googleusercontent.com/a/default-user'),
+        bio: `Full Stack Engineer | Authenticated via ${provider.toUpperCase()}`,
+      });
+      await user.setPassword(randomPass);
+      await user.save();
+    }
+
+    issueSession(res, user);
+  } catch (err) {
+    next(err);
+  }
+}
+
 export function logout(_req, res) {
   res.clearCookie(TOKEN_COOKIE, { ...cookieOptions(), maxAge: undefined });
   res.json({ success: true, message: 'Logged out successfully' });
@@ -103,7 +135,6 @@ export async function updateProfile(req, res, next) {
           req.user.avatar = uploadRes.secure_url;
         }
       } catch (uploadErr) {
-        // If Cloudinary fails (e.g. invalid credentials or network), don't crash
         console.warn('Cloudinary upload warning:', uploadErr.message);
       }
     }

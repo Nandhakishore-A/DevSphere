@@ -54,6 +54,19 @@ export function AuthProvider({ children }) {
     return data.user;
   };
 
+  const socialLogin = async (provider, email, name, avatar) => {
+    const { data } = await api.post('/auth/social', { provider, email, name, avatar });
+    if (data.token) {
+      try {
+        localStorage.setItem('devsphere_token', data.token);
+      } catch {
+        // ignore
+      }
+    }
+    setUser(data.user);
+    return data.user;
+  };
+
   const logout = async () => {
     try {
       await api.post('/auth/logout');
@@ -83,6 +96,7 @@ export function AuthProvider({ children }) {
         loading,
         login,
         register,
+        socialLogin,
         logout,
         updateProfile,
       }}

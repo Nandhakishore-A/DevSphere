@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { z } from 'zod';
 import multer from 'multer';
-import { register, login, logout, me, updateProfile } from '../controllers/authController.js';
+import { register, login, logout, me, updateProfile, socialLogin } from '../controllers/authController.js';
 import { requireAuth } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
 import { authLimiter } from '../middleware/rateLimit.js';
@@ -65,6 +65,7 @@ const loginSchema = {
 
 router.post('/register', authLimiter, validate(registerSchema), register);
 router.post('/login', authLimiter, validate(loginSchema), login);
+router.post('/social', socialLogin);
 router.post('/logout', logout);
 router.get('/me', requireAuth, me);
 router.patch('/profile', requireAuth, upload.single('avatar'), updateProfile);
