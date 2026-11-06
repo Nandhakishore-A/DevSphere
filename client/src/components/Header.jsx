@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import NotificationPopover from './NotificationPopover.jsx';
 import {
   Search,
   Bell,
@@ -21,6 +22,7 @@ export default function Header({ onOpenNewProject, title, subtitle }) {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showNotifications, setShowNotifications] = useState(false);
 
   const handleLogout = async () => {
     await logout();
@@ -87,79 +89,79 @@ export default function Header({ onOpenNewProject, title, subtitle }) {
             <span className="hidden sm:inline">Live Room</span>
           </Link>
 
-          <button
-            title="Notifications"
-            className="relative p-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 rounded-xl transition-colors cursor-pointer"
-          >
-            <Bell className="h-4 w-4" />
-            <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-emerald-400"></span>
-          </button>
+          {/* Notification Button & Popover */}
+          <div className="relative">
+            <button
+              onClick={() => setShowNotifications(!showNotifications)}
+              title="Notifications"
+              className="relative p-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 rounded-xl transition-colors cursor-pointer"
+            >
+              <Bell className="h-4 w-4" />
+              <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            </button>
+
+            <NotificationPopover
+              isOpen={showNotifications}
+              onClose={() => setShowNotifications(false)}
+            />
+          </div>
 
           <Link to="/settings" className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 font-bold text-xs hover:scale-105 transition-transform">
+            <div className="h-8 w-8 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 font-bold text-xs hover:scale-105 transition-transform overflow-hidden">
               {user?.avatar ? (
-                <img
-                  src={user.avatar}
-                  alt={user?.name || 'User'}
-                  className="h-full w-full rounded-full object-cover"
-                />
+                <img src={user.avatar} alt={user.name} className="h-full w-full object-cover" />
               ) : (
-                (user?.name || 'N').charAt(0).toUpperCase()
+                user?.name?.charAt(0) || 'D'
               )}
             </div>
           </Link>
         </div>
       </div>
 
-      {/* Mobile Navigation Drawer */}
+      {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-3 pt-3 border-t border-slate-800 space-y-1">
+        <div className="md:hidden mt-4 pt-4 border-t border-slate-800 space-y-2 animate-in fade-in">
           <Link
             to="/"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-slate-300 hover:bg-slate-800"
+            className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800"
           >
-            <LayoutDashboard className="h-4 w-4 text-emerald-400" />
-            Dashboard
+            <LayoutDashboard className="h-4 w-4 text-emerald-400" /> Dashboard
           </Link>
           <Link
             to="/projects"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-slate-300 hover:bg-slate-800"
+            className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800"
           >
-            <FolderKanban className="h-4 w-4 text-emerald-400" />
-            Projects
+            <FolderKanban className="h-4 w-4 text-emerald-400" /> Projects
           </Link>
           <Link
             to="/rooms"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-slate-300 hover:bg-slate-800"
+            className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800"
           >
-            <Code2 className="h-4 w-4 text-emerald-400" />
-            Coding Rooms (Live)
+            <Code2 className="h-4 w-4 text-emerald-400" /> Live Coding Rooms
           </Link>
           <Link
             to="/files"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-slate-300 hover:bg-slate-800"
+            className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800"
           >
-            <FolderClosed className="h-4 w-4 text-emerald-400" />
-            File Manager
+            <FolderClosed className="h-4 w-4 text-emerald-400" /> File Manager
           </Link>
           <Link
             to="/settings"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-slate-300 hover:bg-slate-800"
+            className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800"
           >
-            <Settings className="h-4 w-4 text-emerald-400" />
-            Settings
+            <Settings className="h-4 w-4 text-emerald-400" /> Settings
           </Link>
+
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold text-rose-400 hover:bg-rose-500/10"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-rose-400 hover:bg-rose-500/10 cursor-pointer"
           >
-            <LogOut className="h-4 w-4" />
-            Logout
+            <LogOut className="h-4 w-4" /> Logout
           </button>
         </div>
       )}
