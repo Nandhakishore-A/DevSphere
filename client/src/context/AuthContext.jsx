@@ -9,6 +9,19 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Quick demo mode for screenshots and previews
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get('demo') === '1') {
+      setUser({
+        _id: '66fa89c0e3a45b0012345678',
+        id: '66fa89c0e3a45b0012345678',
+        name: 'Nandhakishore A',
+        email: 'nandhakishore252@gmail.com',
+      });
+      setLoading(false);
+      return;
+    }
+
     // Check current session via /api/auth/me (cookie and/or Authorization Bearer)
     api
       .get('/auth/me')

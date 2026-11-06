@@ -1,7 +1,19 @@
 # DevSphere — Real-Time Collaborative Project Workspace
 
 > **Code Together. Collaborate Smarter. Build Better.**  
-> A high-concurrency developer workspace engineered with the MERN stack, Socket.IO real-time bi-directional events, $O(1)$ fractional positioning, Monaco-style coding rooms, Cloudinary CDN asset storage, and Optimistic Concurrency Control (OCC).
+> A high-concurrency developer workspace engineered with the MERN stack, Socket.IO real-time bi-directional events, $O(1)$ fractional positioning, Monaco-style coding rooms, Cloudinary CDN asset storage, Optimistic Concurrency Control (OCC), and Vercel cloud deployment.
+
+---
+
+### 🌐 Live Production Deployments (Vercel)
+
+| Service | Live URL | Platform | Status |
+| :--- | :--- | :--- | :---: |
+| **Frontend Web Client** | [https://dev-sphere-client.vercel.app](https://dev-sphere-client.vercel.app/) | Vercel Edge CDN | ![Live](https://img.shields.io/badge/Status-Online-emerald?style=flat-square) |
+| **Backend REST & Health API** | [https://devsphere-api-six.vercel.app](https://devsphere-api-six.vercel.app/) | Vercel Serverless | ![Live](https://img.shields.io/badge/Status-Online-emerald?style=flat-square) |
+| **API Health Check** | [https://devsphere-api-six.vercel.app/health](https://devsphere-api-six.vercel.app/health) | Vercel Serverless | ![Live](https://img.shields.io/badge/Health-200%20OK-emerald?style=flat-square) |
+| **Client Preview Deployment** | [https://devsphere-5mchpidt9-nexus-forge1.vercel.app](https://devsphere-5mchpidt9-nexus-forge1.vercel.app/) | Vercel Edge CDN | ![Live](https://img.shields.io/badge/Status-Online-blue?style=flat-square) |
+| **API Git Main Deployment** | [https://devsphere-api-git-main-nexus-forge1.vercel.app](https://devsphere-api-git-main-nexus-forge1.vercel.app/) | Vercel Serverless | ![Live](https://img.shields.io/badge/Status-Online-blue?style=flat-square) |
 
 ---
 
@@ -14,47 +26,64 @@
 
 ---
 
-## 🎨 Complete UI/UX Workspace Design System
+## 🎨 Original DevSphere Workspace UI
 
-![DevSphere UI System](./docs/screenshots/devsphere_ui_system.jpg)
+### 1. Landing Page & Hero Preview
+![DevSphere Landing Page](./docs/screenshots/devsphere_landing.png)
+*DevSphere public landing page featuring dark emerald design aesthetics, interactive preview tabs, and feature highlights.*
 
-*DevSphere unified developer workspace: Dark emerald design system, real-time coding rooms, live chat, Kanban sprint boards, and cloud file management.*
+### 2. Workspace Dashboard & Quick Filters
+![DevSphere Workspace Dashboard](./docs/screenshots/devsphere_dashboard.png)
+*Collaborative workspace dashboard with live KPI counters, active project cards, quick filter toggles (All, Shared, Completed), and notification center.*
+
+### 3. Projects Directory (Shared & Completed Sprints)
+![DevSphere Projects Directory](./docs/screenshots/devsphere_projects.png)
+*Project tracking directory with dedicated tabs for Shared and Completed projects, collaborator avatars, and glowing progress bars.*
+
+### 4. Cloud File Manager & Storage
+![DevSphere Cloud File Manager](./docs/screenshots/devsphere_file_manager.png)
+*Cloud asset manager with breadcrumb navigation, category filtering, download handlers, and direct Cloudinary CDN synchronization.*
+
+### 5. Verified Cloudinary Storage Bucket
+![Cloudinary Storage Verification](./docs/screenshots/cloudinary_storage.png)
+*Cloudinary cloud storage bucket under folder `mern_stack_project_storage/DevSphere` for project attachments.*
 
 ---
 
 ## 🚀 Key Platform Capabilities
 
-1. **Live Collaborative Coding Rooms:**
-   - Multi-tab file explorer tree supporting TypeScript, React, Python, and CSS.
-   - Real-time syntax-highlighted editor with line numbers and instant save capabilities.
-   - Live collaborator roster with active status dots, voice/video/screen share controls, and synchronized workspace chat.
+1. **Interactive Product Walkthrough:**
+   - "Watch Interactive Demo" modal accessible directly from the landing page.
+   - Live interactive simulation tabs for Coding Studio (code typing animation, real-time terminal logs, peer presence), Kanban Sprint Board (draggable cards, OCC badges), and Cloud File Manager.
 
-2. **Real-Time Kanban Sprint Workspace ($O(1)$ Reordering):**
+2. **One-Click Google & GitHub Social Authentication:**
+   - Instant authentication modal supporting official Google and GitHub providers.
+   - Issues real cryptographically signed JWT tokens and synchronizes profile avatars with MongoDB Atlas.
+
+3. **Interactive Notification Center:**
+   - Real-time notification popover mounted directly on the header bell icon.
+   - Live pulse badge count, event categorizations (task completions, active rooms, shared projects, CDN uploads, security alerts), "Mark read", and "Clear all" actions.
+
+4. **Completed & Shared Projects Directory:**
+   - Dedicated filter tabs for **Shared Projects** and **Completed** sprint workflows.
+   - Interactive progress bars, technology badges (*React, Node.js, MongoDB, Tailwind*), and collaborator rosters.
+
+5. **Real-Time Kanban Sprint Workspace ($O(1)$ Reordering):**
    - High-concurrency sprint boards featuring dynamic multi-column workflows (`Backlog`, `To Do`, `In Progress`, `In Review`).
-   - Powered by `@dnd-kit` drag-and-drop and sub-50ms Socket.IO real-time room broadcasts (`board:<id>`).
-   - Fractional indexing ($O(1)$ positioning): Calculates midpoints between neighboring items (`(before + after) / 2`), requiring exactly 1 document write with zero sibling re-indexing.
+   - Powered by `@dnd-kit` drag-and-drop and sub-50ms Socket.IO real-time broadcasts.
+   - **Fractional indexing ($O(1)$ positioning):** Calculates midpoints between neighboring items (`(before + after) / 2`), requiring exactly 1 document write with zero sibling re-indexing.
 
-3. **Optimistic Concurrency Control (OCC):**
+6. **Optimistic Concurrency Control (OCC):**
    - Task cards track a monotonic integer `version`.
    - Concurrent edits trigger an `HTTP 409 Conflict` response with side-by-side visual diff comparison, allowing collaborators to choose *"Keep Collaborator's Version"* or *"Overwrite With Mine"*.
 
-4. **Multi-Project Directory & Dashboard:**
-   - Comprehensive workspace dashboard displaying active projects, live room counts, team members, and uploaded asset KPIs.
-   - Filterable projects directory with tabs for *All*, *My Projects*, *Shared*, and *Archived*, tagged with technology stack chips (*React, Node.js, MongoDB, Tailwind*).
+7. **Live Coding Studio & Terminal Runner:**
+   - Monaco-inspired code editor supporting TypeScript, React, and Python syntax.
+   - Integrated "Run Code" execution runner with simulated terminal console logs and active peer presence indicators.
 
-5. **Cloud File Manager & Cloudinary Integration:**
+8. **Cloud File Manager & Cloudinary Integration:**
    - Dedicated cloud file manager with breadcrumb navigation and categorized views (*All Files, Images, Documents, Archives*).
    - Direct integration with Cloudinary CDN storage under `mern_stack_project_storage/DevSphere`.
-
-![Cloudinary Storage](./docs/screenshots/cloudinary_storage.png)
-
-6. **Three-Tier Role-Based Access Control (RBAC):**
-   - **Owner:** Full workspace administration, member invitations, role management, and board deletion.
-   - **Member:** Create, edit, reorder, and delete task cards and lists.
-   - **Viewer (Read-Only):** Observes board state, searches/filters, and receives live WebSocket broadcasts without mutation permissions.
-
-7. **Append-Only Activity Stream:**
-   - Cursor-paginated timeline tracking who created, edited, moved, or deleted boards, lists, and cards.
 
 ---
 
@@ -67,7 +96,7 @@
 | **Database** | MongoDB Atlas (High-Availability Cloud Cluster) |
 | **Cloud Storage** | Cloudinary CDN (`mern_stack_project_storage/DevSphere`) |
 | **Design System** | Emerald / Neon Teal (`#10B981`, `#059669`, `#047857`), Slate (`#0B131E`, `#0F172A`, `#1E293B`), Inter Typography |
-| **Deployment** | Vercel Serverless Functions & Render Blueprint |
+| **Deployment** | Vercel Serverless Functions & Vercel Edge Network |
 
 ---
 
@@ -105,18 +134,20 @@ sequenceDiagram
 DevSphere/
 ├── client/                     # Vite + React 18 Single-Page Application
 │   ├── src/
-│   │   ├── api/client.js       # Axios client with interceptors
+│   │   ├── api/client.js              # Axios client with interceptors
 │   │   ├── components/
 │   │   │   ├── Sidebar.jsx            # Left navigation sidebar
-│   │   │   ├── Header.jsx             # Top search & quick actions bar
-│   │   │   ├── Navbar.jsx             # Board navigation bar
+│   │   │   ├── Header.jsx             # Top search & notification bell
+│   │   │   ├── NotificationPopover.jsx # Real-time notification center
+│   │   │   ├── DemoModal.jsx          # Interactive product walkthrough modal
+│   │   │   ├── OAuthModal.jsx         # Google & GitHub 1-click social auth
+│   │   │   ├── DocsModal.jsx          # Interactive architecture docs
 │   │   │   ├── ListColumn.jsx         # Kanban column container
 │   │   │   ├── SortableCard.jsx       # Draggable task card with OCC badge
 │   │   │   ├── CardModal.jsx          # Task inspection & editing modal
 │   │   │   ├── ConflictDialog.jsx     # Side-by-side OCC conflict resolver
 │   │   │   ├── MemberModal.jsx        # RBAC role management modal
-│   │   │   ├── CreateBoardModal.jsx   # Project workspace creation modal
-│   │   │   └── ActivityPanel.jsx      # Audit history stream
+│   │   │   └── CreateBoardModal.jsx   # Project workspace creation modal
 │   │   ├── pages/
 │   │   │   ├── Landing.jsx            # Public landing page with hero & preview
 │   │   │   ├── Dashboard.jsx          # Workspace dashboard with 4 metric cards
@@ -128,21 +159,20 @@ DevSphere/
 │   │   │   ├── Login.jsx              # Split-screen authentication
 │   │   │   └── Register.jsx           # Account creation with password checklist
 │   │   ├── context/AuthContext.jsx    # Session state & JWT management
-│   │   ├── theme.js                   # Emerald design palette constants
 │   │   ├── socket.js                  # Socket.IO client singleton
 │   │   └── App.jsx                    # React Router 6 configuration
 │   ├── index.html                     # HTML5 entrypoint with Inter font
 │   └── vite.config.js
 │
 ├── server/                     # Node.js + Express + Socket.IO Backend
-│   ├── api/index.js            # Vercel serverless entrypoint
+│   ├── index.js                # Serverless entrypoint
 │   ├── src/
 │   │   ├── config/
 │   │   │   ├── db.js                  # MongoDB Atlas connection gateway
 │   │   │   ├── env.js                 # Environment validation
 │   │   │   └── cloudinary.js          # Cloudinary v2 SDK configuration
 │   │   ├── controllers/
-│   │   │   ├── authController.js      # Register, login, profile, photo upload
+│   │   │   ├── authController.js      # Register, login, social auth, profile
 │   │   │   ├── boardController.js     # Workspace CRUD & RBAC members
 │   │   │   ├── cardController.js      # Task card mutations & OCC bump
 │   │   │   └── listController.js      # Column management & reordering
@@ -153,14 +183,14 @@ DevSphere/
 │   │   └── index.js                   # HTTP server bootstrap
 │   └── package.json
 │
-├── docs/screenshots/           # UI system & storage verification screenshots
+├── docs/screenshots/           # Original UI system & storage verification screenshots
 ├── package.json                # Monorepo workspaces definition
-└── render.yaml                 # Infrastructure as Code blueprint
+└── vercel.json                 # Vercel Serverless & Static Build deployment configuration
 ```
 
 ---
 
-## 🛠️ Installation & Execution
+## 🛠️ Local Installation & Development
 
 ### Prerequisites
 - **Node.js** (v18.0.0 or higher)
@@ -180,27 +210,23 @@ npm install --ignore-scripts
 ```
 
 ### 3. Configure Environment Variables
-Copy `.env.example` to `server/.env`:
-```bash
-cp .env.example server/.env
-```
-Fill in your MongoDB Atlas and Cloudinary credentials:
+Create `.env` inside `server/`:
 ```env
 PORT=5000
 NODE_ENV=development
 CLIENT_ORIGIN=http://localhost:5173
-MONGO_URI=mongodb+srv://<db_user>:<db_password>@cluster0.henwuyf.mongodb.net/DevSphere?retryWrites=true&w=majority
+MONGO_URI=mongodb+srv://nandhakishore252_db_user:kdcF1ZIjSYuRDJWw@cluster0.nrgzdjz.mongodb.net/DevSphere?retryWrites=true&w=majority
 JWT_SECRET=devsphere_super_secure_jwt_secret_token_key_2026_at_least_32_chars
 JWT_EXPIRES_IN=7d
 CLOUDINARY_CLOUD_NAME=zsfupefr
 CLOUDINARY_API_KEY=956281599364653
-CLOUDINARY_API_SECRET=your_cloudinary_api_secret_here
+CLOUDINARY_API_SECRET=UJ5UEJgFVt17dwgd4vAK3YQ_6HM
 CLOUDINARY_FOLDER=mern_stack_project_storage/DevSphere
 ```
 
 ### 4. Run Development Servers
 ```bash
-# Run backend and frontend concurrently
+# Run both backend and frontend concurrently
 npm run dev
 
 # Or run separately:
@@ -210,14 +236,31 @@ npm run dev:client   # Vite Frontend on http://localhost:5173
 
 ---
 
-## 🚢 Production Deployment
+## 🚢 Vercel Cloud Deployment Setup
 
-### Vercel Deployment
-1. Connect your repository [`https://github.com/Nandhakishore-A/DevSphere`](https://github.com/Nandhakishore-A/DevSphere) to Vercel.
-2. Set Root Directory to `client` for the frontend and `server` for the backend.
-3. Configure the environment variables in the Vercel dashboard matching your `.env`.
+### Step 1: Backend Deployment (`devsphere-api`)
+1. Import `Nandhakishore-A/DevSphere` into Vercel.
+2. Set **Root Directory** to `server`.
+3. Add environment variables:
+   - `NODE_ENV` = `production`
+   - `MONGO_URI` = `mongodb+srv://...`
+   - `JWT_SECRET` = `devsphere_super_secure_jwt_secret_token_key_2026_at_least_32_chars`
+   - `CLOUDINARY_CLOUD_NAME` = `zsfupefr`
+   - `CLOUDINARY_API_KEY` = `956281599364653`
+   - `CLOUDINARY_API_SECRET` = `UJ5UEJgFVt17dwgd4vAK3YQ_6HM`
+   - `CLOUDINARY_FOLDER` = `mern_stack_project_storage/DevSphere`
+4. Deploy to receive your API URL: `https://devsphere-api-six.vercel.app`.
+
+### Step 2: Frontend Deployment (`dev-sphere-client`)
+1. Import `Nandhakishore-A/DevSphere` again into Vercel.
+2. Set **Root Directory** to `client`.
+3. Set **Framework Preset** to `Vite`.
+4. Add environment variables:
+   - `VITE_API_URL` = `https://devsphere-api-six.vercel.app/api`
+   - `VITE_SOCKET_URL` = `https://devsphere-api-six.vercel.app`
+5. Deploy to receive your live web URL: `https://dev-sphere-client.vercel.app`.
 
 ---
 
 ## 📄 License
-This project is licensed under the MIT License — authored by **Nandhakishore A**.
+This project is licensed under the MIT License — authored and maintained by **Nandhakishore A**.
