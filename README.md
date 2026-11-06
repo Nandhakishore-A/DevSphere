@@ -208,23 +208,7 @@ cd DevSphere
 ```bash
 npm install --ignore-scripts
 ```
-
-### 3. Configure Environment Variables
-Create `.env` inside `server/`:
-```env
-PORT=5000
-NODE_ENV=development
-CLIENT_ORIGIN=http://localhost:5173
-MONGO_URI=mongodb+srv://nandhakishore252_db_user:kdcF1ZIjSYuRDJWw@cluster0.nrgzdjz.mongodb.net/DevSphere?retryWrites=true&w=majority
-JWT_SECRET=devsphere_super_secure_jwt_secret_token_key_2026_at_least_32_chars
-JWT_EXPIRES_IN=7d
-CLOUDINARY_CLOUD_NAME=zsfupefr
-CLOUDINARY_API_KEY=956281599364653
-CLOUDINARY_API_SECRET=UJ5UEJgFVt17dwgd4vAK3YQ_6HM
-CLOUDINARY_FOLDER=mern_stack_project_storage/DevSphere
-```
-
-### 4. Run Development Servers
+### 3. Run Development Servers
 ```bash
 # Run both backend and frontend concurrently
 npm run dev
@@ -233,33 +217,6 @@ npm run dev
 npm run dev:server   # Express API on http://localhost:5000
 npm run dev:client   # Vite Frontend on http://localhost:5173
 ```
-
----
-
-## 🚢 Vercel Cloud Deployment Setup
-
-### Step 1: Backend Deployment (`devsphere-api`)
-1. Import `Nandhakishore-A/DevSphere` into Vercel.
-2. Set **Root Directory** to `server`.
-3. Add environment variables:
-   - `NODE_ENV` = `production`
-   - `MONGO_URI` = `mongodb+srv://...`
-   - `JWT_SECRET` = `devsphere_super_secure_jwt_secret_token_key_2026_at_least_32_chars`
-   - `CLOUDINARY_CLOUD_NAME` = `zsfupefr`
-   - `CLOUDINARY_API_KEY` = `956281599364653`
-   - `CLOUDINARY_API_SECRET` = `UJ5UEJgFVt17dwgd4vAK3YQ_6HM`
-   - `CLOUDINARY_FOLDER` = `mern_stack_project_storage/DevSphere`
-4. Deploy to receive your API URL: `https://devsphere-api-six.vercel.app`.
-
-### Step 2: Frontend Deployment (`dev-sphere-client`)
-1. Import `Nandhakishore-A/DevSphere` again into Vercel.
-2. Set **Root Directory** to `client`.
-3. Set **Framework Preset** to `Vite`.
-4. Add environment variables:
-   - `VITE_API_URL` = `https://devsphere-api-six.vercel.app/api`
-   - `VITE_SOCKET_URL` = `https://devsphere-api-six.vercel.app`
-5. Deploy to receive your live web URL: `https://dev-sphere-client.vercel.app`.
-
 ---
 
 ## 📄 License
